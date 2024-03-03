@@ -3,7 +3,7 @@ import Joi from "joi"
 
 export const addbrandSchema = Joi.object({
     title:Joi.string().min(3).max(20).required(),
-    logo:Joi.object({
+    Image:Joi.object({
         fieldname:Joi.string().required(),
         originalname:Joi.string().required(),
         encoding:Joi.string().required(),

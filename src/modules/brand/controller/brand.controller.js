@@ -5,7 +5,7 @@ import { handelError } from "../../../middelware/handelError.js";
 //add brand
 const addbrand =handelError(async(req,res) =>{
     req.body.slug = slugify(req.body.title);
-    req.body.logo = req.file.filename
+    req.body.image = req.file.filename
     let prebrand = new brandModel(req.body);
     let addedbrand = await prebrand.save()
     res.json({message:"Added",addedbrand})

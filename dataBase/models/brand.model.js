@@ -14,7 +14,7 @@ const schema = new mongoose.Schema(
       required: true,
       lowercase: true,
     },
-    logo: String,
+    image: String,
     createedBy: {
       type: mongoose.Types.ObjectId,
       ref: "User",
