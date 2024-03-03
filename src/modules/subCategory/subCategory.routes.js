@@ -4,7 +4,7 @@ import { validation } from '../../middelware/validation.js';
 import { addsubCatgeorySchema, getbyidSchema, updatesubCategorySchema } from './subCategory.validation.js';
 import { uploadSingle } from '../../Utiletis/fileUpload.js';
 
-const subCategoryRoutes = express.Router();
+const subCategoryRoutes = express.Router({mergeParams:true});
 
 
 subCategoryRoutes.route("/")

@@ -1,6 +1,7 @@
 import brandModel from "../../../../dataBase/models/brand.model.js";
 import slugify from "slugify";
 import { handelError } from "../../../middelware/handelError.js";
+import { deleteOne } from "../../handlers/apiHandlers.js";
 
 //add brand
 const addbrand =handelError(async(req,res) =>{
@@ -33,11 +34,6 @@ const updatebrand = handelError(async(req,res) =>{
 })
 
 //delete brand
-const deletebrand = handelError(async(req,res) =>{
-    let deletedbrand = await brandModel.findByIdAndDelete(req.params.id,req.body,{new:true});
-    deletedbrand  && res.json({message:"Delete",deletedbrand})
-    !deletedbrand && res.json({message:"not found",deletedbrand})
-})
-
+const deletebrand = deleteOne(brandModel)
 
 export { addbrand,getAllbrand,getAllbrandById,updatebrand,deletebrand}

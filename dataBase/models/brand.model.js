@@ -25,7 +25,9 @@ const schema = new mongoose.Schema(
   }
 );
 
-
+schema.post("init",function(doc){
+  doc.image = process.env.BASEURL+"uploads/"+ doc.image
+})
 
 const brandModel = mongoose.model("brand", schema);
 

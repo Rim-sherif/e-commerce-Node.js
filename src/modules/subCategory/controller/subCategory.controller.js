@@ -1,6 +1,7 @@
 import subCategoryModel from "../../../../dataBase/models/subCategory.model.js";
 import slugify from "slugify";
 import { handelError } from "../../../middelware/handelError.js";
+import { deleteOne } from "../../handlers/apiHandlers.js";
 
 //add subCategory
 const addsubCategory =handelError(async(req,res) =>{
@@ -13,7 +14,11 @@ const addsubCategory =handelError(async(req,res) =>{
 
 //get all subcategories
 const getAllsubCategories = handelError(async(req,res)=>{
-    let allsubCategories = await subCategoryModel.find()
+    let filterObj = {}
+    if(req.params.category){
+        filterObj.category = req.params.category
+    }
+    let allsubCategories = await subCategoryModel.find(filterObj)
     res.json({message:"Done",allsubCategories})
 });
 
@@ -32,11 +37,6 @@ const updatesubCategory = handelError(async(req,res) =>{
 })
 
 //delete subCategory
-const deletesubCategory = handelError(async(req,res) =>{
-    let deletedsubCategory = await subCategoryModel.findByIdAndDelete(req.params.id,req.body,{new:true});
-    deletedsubCategory  && res.json({message:"Delete",deletedsubCategory})
-    !deletedsubCategory && res.json({message:"not found",deletedsubCategory})
-})
-
+const deletesubCategory = deleteOne(subCategoryModel)
 
 export { addsubCategory,getAllsubCategories,getAllsubCategoriesById,updatesubCategory,deletesubCategory}

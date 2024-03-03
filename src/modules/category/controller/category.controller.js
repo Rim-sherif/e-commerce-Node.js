@@ -1,6 +1,7 @@
 import categoryModel from "../../../../dataBase/models/category.model.js";
 import slugify from "slugify";
 import { handelError } from "../../../middelware/handelError.js";
+import { deleteOne } from "../../handlers/apiHandlers.js";
 
 //add category
 const addCategory =handelError(async(req,res) =>{
@@ -32,11 +33,7 @@ const updateCategory = handelError(async(req,res) =>{
 })
 
 //delete category
-const deleteCategory = handelError(async(req,res) =>{
-    let deletedCategory = await categoryModel.findByIdAndDelete(req.params.id,req.body,{new:true});
-    deletedCategory  && res.json({message:"Delete",deletedCategory})
-    !deletedCategory && res.json({message:"not found",deletedCategory})
-})
+const deleteCategory = deleteOne(categoryModel)
 
 
 export { addCategory,getAllCategories,getAllCategoriesById,updateCategory,deleteCategory}

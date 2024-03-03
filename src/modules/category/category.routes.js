@@ -3,10 +3,11 @@ import { addCategory,deleteCategory,getAllCategories, getAllCategoriesById, upda
 import { validation } from '../../middelware/validation.js';
 import { addCatgeorySchema, getbyidSchema, updateCategorySchema } from './category.validation.js';
 import { uploadSingle } from '../../Utiletis/fileUpload.js';
+import subCategoryRoutes from '../subCategory/subCategory.routes.js';
 
 const categoryRoutes = express.Router();
 
-
+categoryRoutes.use("/:category/subcategory",subCategoryRoutes)
 categoryRoutes.route("/")
     .post(uploadSingle('image'),validation(addCatgeorySchema), addCategory)
     .get(getAllCategories)

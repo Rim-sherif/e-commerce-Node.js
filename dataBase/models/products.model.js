@@ -30,7 +30,7 @@ const schema = new mongoose.Schema(
       required: true,
       default: 1,
     },
-    imageCover: String,
+    imageCover: [String],
     images: [String],
     price: {
       type: Number,
@@ -69,6 +69,11 @@ const schema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+schema.post("init",function(doc){
+  doc.imageCover = process.env.BASEURL+"uploads/"+ doc.imageCover;
+  doc.images = doc.images.map(ele => process.env.BASEURL+"uploads/"+ ele)
+})
 
 const productsModel = mongoose.model("product", schema);
 
