@@ -2,6 +2,7 @@ import productsModel from "../../../../dataBase/models/products.model.js";
 import slugify from "slugify";
 import { handelError } from "../../../middelware/handelError.js";
 import { deleteOne } from "../../handlers/apiHandlers.js";
+import ApiFeatures from "../../../Utiletis/apiFeatures.js";
 
 //add product
 const addproduct = handelError(async (req, res) => {
@@ -16,18 +17,9 @@ const addproduct = handelError(async (req, res) => {
 
 //get all product
 const getAllproduct = handelError(async (req, res) => {
-  // pagination
-  let page = req.query.page * 1 || 1;
-  if (req.query.page <= 0) page = 1;
-  let skip = (page - 1) * 4;
-  //filter
-  let filterObje = req.query;
-  let exculedQuery = ["page", "sort", "keyword", "fields"];
-  exculedQuery.forEach((ele) => {
-    delete filterObje[ele];
-  });
-  let allproduct = await productsModel.find(filterObje).skip(skip).limit(4);
-  res.json({ message: "Done", page, allproduct });
+  let api = new ApiFeatures (productsModel.find(),req.query).pagination()
+   let allproduct = await api.mogooseQuery;
+  res.json({ message: "Done", page:api.page, allproduct });
 });
 
 //get all productby id

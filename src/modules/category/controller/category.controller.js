@@ -2,6 +2,7 @@ import categoryModel from "../../../../dataBase/models/category.model.js";
 import slugify from "slugify";
 import { handelError } from "../../../middelware/handelError.js";
 import { deleteOne } from "../../handlers/apiHandlers.js";
+import ApiFeatures from "../../../Utiletis/apiFeatures.js";
 
 //add category
 const addCategory =handelError(async(req,res) =>{
@@ -14,7 +15,8 @@ const addCategory =handelError(async(req,res) =>{
 
 //get all categories
 const getAllCategories = handelError(async(req,res)=>{
-    let allCategories = await categoryModel.find()
+    let api = new ApiFeatures (categoryModel.find(),req.query).pagination()
+    let allCategories = await api.mogooseQuery;
     res.json({message:"Done",allCategories})
 });
 
